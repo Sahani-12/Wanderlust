@@ -47,7 +47,7 @@ module.exports.signup = async (req, res, next) => {
 
     req.login(registeredUser, (err) => {
       if (err) return next(err);
-      req.flash("success", `Welcome to CareConnect, ${username}!`);
+      req.flash("success", `Welcome to Wanderlust, ${username}!`);
       res.redirect("/listings");
     });
   } catch (e) {
@@ -93,7 +93,7 @@ module.exports.verifyEmail = async (req, res) => {
 
   req.flash(
     "success",
-    "Your email has been verified successfully! You now have full access to CareConnect."
+    "Your email has been verified successfully! You now have full access to Wanderlust."
   );
   res.redirect(req.isAuthenticated() ? "/listings" : "/login");
 };
@@ -147,7 +147,7 @@ module.exports.renderLoginForm = (req, res) => {
 
 // Login
 module.exports.login = async (req, res) => {
-  req.flash("success", `Welcome back to CareConnect, ${req.user.username}!`);
+  req.flash("success", `Welcome back to Wanderlust, ${req.user.username}!`);
   const redirectUrl = res.locals.redirectUrl || "/listings";
   res.redirect(redirectUrl);
 };

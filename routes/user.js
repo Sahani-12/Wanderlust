@@ -84,7 +84,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
       failureFlash: true,
     }),
     (req, res) => {
-      req.flash("success", `Welcome to CareConnect, ${req.user.username}!`);
+      req.flash("success", `Welcome to Wanderlust, ${req.user.username}!`);
       res.redirect("/listings");
     }
   );

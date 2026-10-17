@@ -20,7 +20,7 @@ const getTransporter = () => {
 
 // Send Email with dev fallback
 const sendMail = async ({ to, subject, html, text }) => {
-  const from = process.env.SMTP_FROM || '"CareConnect" <no-reply@careconnect.com>';
+  const from = process.env.SMTP_FROM || '"Wanderlust" <no-reply@wanderlust.com>';
   const transporter = getTransporter();
 
   if (!transporter) {
@@ -42,8 +42,8 @@ const sendMail = async ({ to, subject, html, text }) => {
 
 // Send Email Verification Link
 const sendVerificationEmail = async ({ to, username, verificationUrl }) => {
-  const subject = "Verify Your CareConnect Account";
-  const text = `Hi ${username},\n\nThank you for signing up for CareConnect! Please verify your email by clicking the link below:\n${verificationUrl}\n\nThis link will expire in 24 hours.\n\nBest regards,\nThe CareConnect Team`;
+  const subject = "Verify Your Wanderlust Account";
+  const text = `Hi ${username},\n\nThank you for signing up for Wanderlust! Please verify your email by clicking the link below:\n${verificationUrl}\n\nThis link will expire in 24 hours.\n\nBest regards,\nThe Wanderlust Team`;
 
   const html = `
     <!DOCTYPE html>
@@ -64,11 +64,11 @@ const sendVerificationEmail = async ({ to, username, verificationUrl }) => {
       <body>
         <div class="container">
           <div class="header">
-            <h1>Welcome to CareConnect!</h1>
+            <h1>Welcome to Wanderlust!</h1>
           </div>
           <div class="content">
             <p>Hi <strong>${username}</strong>,</p>
-            <p>Thank you for creating an account with CareConnect. To unlock full access to creating listings, booking stays, and sharing reviews, please verify your email address:</p>
+            <p>Thank you for creating an account with Wanderlust. To unlock full access to creating listings, booking stays, and sharing reviews, please verify your email address:</p>
             <div class="btn-container">
               <a href="${verificationUrl}" class="btn" target="_blank">Verify Email Address</a>
             </div>
@@ -76,7 +76,7 @@ const sendVerificationEmail = async ({ to, username, verificationUrl }) => {
             <p style="font-size: 13px; color: #888;">This link will expire in 24 hours. If you did not create this account, you can safely ignore this email.</p>
           </div>
           <div class="footer">
-            &copy; ${new Date().getFullYear()} CareConnect Inc. All rights reserved.
+            &copy; ${new Date().getFullYear()} Wanderlust Inc. All rights reserved.
           </div>
         </div>
       </body>
@@ -88,8 +88,8 @@ const sendVerificationEmail = async ({ to, username, verificationUrl }) => {
 
 // Send Password Reset Link
 const sendPasswordResetEmail = async ({ to, username, resetUrl }) => {
-  const subject = "Reset Your CareConnect Password";
-  const text = `Hi ${username},\n\nYou requested a password reset for your CareConnect account. Please click the link below to set a new password:\n${resetUrl}\n\nThis link will expire in 1 hour and can only be used once.\n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n\nBest regards,\nThe CareConnect Team`;
+  const subject = "Reset Your Wanderlust Password";
+  const text = `Hi ${username},\n\nYou requested a password reset for your Wanderlust account. Please click the link below to set a new password:\n${resetUrl}\n\nThis link will expire in 1 hour and can only be used once.\n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n\nBest regards,\nThe Wanderlust Team`;
 
   const html = `
     <!DOCTYPE html>
@@ -114,7 +114,7 @@ const sendPasswordResetEmail = async ({ to, username, resetUrl }) => {
           </div>
           <div class="content">
             <p>Hi <strong>${username}</strong>,</p>
-            <p>We received a request to reset the password for your CareConnect account. Click the button below to choose a new password:</p>
+            <p>We received a request to reset the password for your Wanderlust account. Click the button below to choose a new password:</p>
             <div class="btn-container">
               <a href="${resetUrl}" class="btn" target="_blank">Reset Password</a>
             </div>
@@ -122,7 +122,7 @@ const sendPasswordResetEmail = async ({ to, username, resetUrl }) => {
             <p style="font-size: 13px; color: #888;">This link will expire in <strong>1 hour</strong> and can only be used once. If you did not request a password reset, please ignore this email.</p>
           </div>
           <div class="footer">
-            &copy; ${new Date().getFullYear()} CareConnect Inc. All rights reserved.
+            &copy; ${new Date().getFullYear()} Wanderlust Inc. All rights reserved.
           </div>
         </div>
       </body>

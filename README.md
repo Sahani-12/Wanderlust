@@ -1,6 +1,6 @@
-# CareConnect 🏡
+# Wanderlust 🏡
 
-CareConnect is a production-grade, full-stack rental marketplace built with Node.js, Express 5, MongoDB, and EJS following MVC architecture.
+Wanderlust is a production-grade, full-stack rental marketplace built with Node.js, Express 5, MongoDB, and EJS following MVC architecture.
 
 ---
 
@@ -66,7 +66,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your_email@gmail.com
 SMTP_PASS=your_app_specific_password
-SMTP_FROM="CareConnect <no-reply@careconnect.com>"
+SMTP_FROM="Wanderlust <no-reply@wanderlust.com>"
 
 # Optional Google OAuth
 GOOGLE_CLIENT_ID=
