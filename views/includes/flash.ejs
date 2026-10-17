@@ -1,9 +1,12 @@
-<% if(success && success.length) { %>
+<% const successMsg = (typeof success !== "undefined" && success) ? success : (typeof locals !== "undefined" && locals.success ? locals.success : null); %>
+<% const errorMsg = (typeof error !== "undefined" && error) ? error : (typeof locals !== "undefined" && locals.error ? locals.error : null); %>
+
+<% if (successMsg && successMsg.length) { %>
 <div
   class="alert alert-success alert-dismissible fade show col-12 col-md-8 offset-md-2 my-3"
   role="alert"
 >
-  <%= success %>
+  <%= successMsg %>
   <button
     type="button"
     class="btn-close"
@@ -13,12 +16,12 @@
 </div>
 <% } %>
 
-<% if(error && error.length) { %>
+<% if (errorMsg && errorMsg.length) { %>
 <div
   class="alert alert-danger alert-dismissible fade show col-12 col-md-8 offset-md-2 my-3"
   role="alert"
 >
-  <%= error %>
+  <%= errorMsg %>
   <button
     type="button"
     class="btn-close"

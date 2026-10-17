@@ -48,16 +48,17 @@
       <div class="navbar-nav ms-auto align-items-md-center">
         <a class="nav-link" href="/listings/new">List your home</a>
 
-        <% if (!currUser) { %>
+        <% const user = (typeof currUser !== "undefined" && currUser) ? currUser : (typeof locals !== "undefined" && locals.currUser ? locals.currUser : null); %>
+        <% if (!user) { %>
           <a class="nav-link" href="/signup"><b>Sign up</b></a>
           <a class="nav-link" href="/login"><b>Login</b></a>
         <% } else { %>
           <span class="user-badge my-1 my-md-0 me-md-2 text-dark">
             <i class="fa-solid fa-circle-user text-secondary"></i>
-            <span><%= currUser.username %></span>
-            <% if (currUser.role === 'admin') { %>
+            <span><%= user.username %></span>
+            <% if (user.role === 'admin') { %>
               <span class="badge bg-danger ms-1" style="font-size: 10px;">Admin</span>
-            <% } else if (currUser.role === 'host') { %>
+            <% } else if (user.role === 'host') { %>
               <span class="badge bg-primary ms-1" style="font-size: 10px;">Host</span>
             <% } %>
           </span>

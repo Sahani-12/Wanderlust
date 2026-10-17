@@ -108,6 +108,14 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 
+// Default Template Locals (Guarantees variables always exist even during early errors)
+app.use((req, res, next) => {
+  res.locals.currUser = null;
+  res.locals.success = [];
+  res.locals.error = [];
+  next();
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
@@ -201,9 +209,9 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 // Template Locals
 
 app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  res.locals.currUser = req.user;
+  res.locals.success = req.flash ? req.flash("success") : [];
+  res.locals.error = req.flash ? req.flash("error") : [];
+  res.locals.currUser = req.user || null;
   next();
 });
 
@@ -230,9 +238,14 @@ app.use((req, res, next) => {
 
 // Global Error Handler
 app.use((err, req, res, next) => {
+  // Ensure template variables are available for error.ejs -> boilerplate -> navbar
+  res.locals.currUser = req.user || res.locals.currUser || null;
+  res.locals.success = res.locals.success || [];
+  res.locals.error = res.locals.error || [];
+
   // Handle Multer Upload Errors
   if (err.name === "MulterError") {
-    req.flash("error", `File upload error: ${err.message}`);
+    if (req.flash) req.flash("error", `File upload error: ${err.message}`);
     return res.status(400).redirect(req.headers.referer || "/listings");
   }
 
@@ -249,6 +262,7 @@ app.use((err, req, res, next) => {
       message,
       stack: isProduction ? null : err.stack,
     },
+    currUser: res.locals.currUser,
   });
 });
 
