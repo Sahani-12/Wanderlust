@@ -1,4 +1,9 @@
-if (typeof mapboxgl !== "undefined" && mapToken && listing?.geometry?.coordinates) {
+if (
+  typeof mapboxgl !== "undefined" &&
+  mapToken &&
+  Array.isArray(listing?.geometry?.coordinates) &&
+  listing.geometry.coordinates.length === 2
+) {
   mapboxgl.accessToken = mapToken;
 
   const coordinates = listing.geometry.coordinates;

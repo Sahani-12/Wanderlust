@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)) { %>
+  <% if(currUser && listing.owner && (listing.owner._id || listing.owner).equals(currUser._id)) { %>
   <div class="col-12 col-md-10 col-lg-8 d-flex flex-wrap gap-2 gap-sm-3 my-3">
     <a
       href="/listings/<%= listing._id %>/edit"
@@ -130,7 +130,7 @@
       <hr />
       <h5 class="mb-3 fw-bold">All Reviews (<%= listing.reviews.length %>)</h5>
       <div class="row g-3">
-        <% for(review of listing.reviews) { %>
+        <% for(let review of listing.reviews) { %>
         <div class="col-12 col-md-6">
           <div class="card h-100 p-3 border shadow-sm rounded-3">
             <div class="card-body p-0">
@@ -144,7 +144,7 @@
               ></p>
               <p class="card-text text-secondary mb-2"><%= review.comment %></p>
 
-              <% if(currUser && review.author && review.author._id.equals(currUser._id)) { %>
+              <% if(currUser && review.author && (review.author._id || review.author).equals(currUser._id)) { %>
               <form
                 class="mt-2"
                 method="POST"
