@@ -208,6 +208,12 @@ app.use((req, res, next) => {
 });
 
 // Routes
+// Singular /listing alias redirect (prevents Cannot GET /listing)
+app.use("/listing", (req, res) => {
+  const target = req.originalUrl.replace(/^\/listing(?=\/|$)/, "/listings");
+  res.redirect(target);
+});
+
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
