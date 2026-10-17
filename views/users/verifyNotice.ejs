@@ -1,0 +1,27 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container d-flex justify-content-center align-items-center py-4 py-md-5">
+  <div class="auth-card p-4 text-center">
+    <div class="mb-3">
+      <i class="fa-solid fa-envelope-circle-check text-danger" style="font-size: 3rem;"></i>
+    </div>
+    <h4 class="fw-semibold mb-2">Verify Your Email</h4>
+    <p class="text-muted small mb-4">
+      To create listings, write reviews, or book stays, you must verify your email address. We sent a verification link to your registered email.
+    </p>
+
+    <div class="alert alert-info py-2 small mb-4" role="alert">
+      <i class="fa-solid fa-info-circle me-1"></i> Check your inbox and spam/junk folder.
+    </div>
+
+    <form action="/resend-verification" method="POST">
+      <button class="btn auth-btn w-100 mb-3" type="submit">
+        <i class="fa-solid fa-paper-plane me-2"></i>Resend Verification Email
+      </button>
+    </form>
+
+    <p class="small text-muted mb-0">
+      Already verified? <a href="/listings" class="fw-semibold text-decoration-none">Browse Listings</a>
+    </p>
+  </div>
+</div>

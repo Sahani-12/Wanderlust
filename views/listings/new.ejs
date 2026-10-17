@@ -1,11 +1,9 @@
 <% layout("/layouts/boilerplate") %>
 
-<div
-  class="container d-flex justify-content-center align-items-center min-vh-100"
->
-  <div class="auth-card p-4">
+<div class="container d-flex justify-content-center align-items-center py-4">
+  <div class="form-card p-4">
     <h4 class="text-center mb-1 fw-semibold">Create New Listing</h4>
-    <p class="text-center text-muted mb-4">Add a new place to HomeHunt</p>
+    <p class="text-center text-muted mb-4 small">Add a new place to CareConnect</p>
 
     <form
       method="POST"
@@ -14,9 +12,8 @@
       novalidate
       enctype="multipart/form-data"
     >
-      <!-- Title -->
       <div class="mb-3">
-        <label class="form-label">Title</label>
+        <label class="form-label fw-semibold">Title</label>
         <input
           type="text"
           name="listing[title]"
@@ -24,58 +21,62 @@
           class="form-control auth-input"
           required
         />
+        <div class="invalid-feedback">Please enter a listing title.</div>
       </div>
 
-      <!-- Description -->
       <div class="mb-3">
-        <label class="form-label">Description</label>
+        <label class="form-label fw-semibold">Description</label>
         <textarea
           name="listing[description]"
           rows="3"
           class="form-control auth-input"
-          placeholder="Describe your place"
+          placeholder="Describe your place in detail"
           required
         ></textarea>
+        <div class="invalid-feedback">Please enter a description.</div>
       </div>
 
-      <!-- Image -->
       <div class="mb-3">
-        <label class="form-label">Listing Image</label>
+        <label class="form-label fw-semibold">Listing Image (Max 5MB - JPG, PNG, WebP)</label>
         <input
           type="file"
           name="listing[image]"
+          accept="image/jpeg,image/png,image/jpg,image/webp"
           class="form-control auth-input"
           required
         />
+        <div class="invalid-feedback">Please select an image.</div>
       </div>
 
-      <!-- Price -->
-      <div class="mb-3">
-        <label class="form-label">Price (₹ / night)</label>
-        <input
-          type="number"
-          name="listing[price]"
-          placeholder="1200"
-          class="form-control auth-input"
-          required
-        />
+      <div class="row g-3 mb-3">
+        <div class="col-12 col-md-6">
+          <label class="form-label fw-semibold">Price (₹ / night)</label>
+          <input
+            type="number"
+            name="listing[price]"
+            placeholder="1200"
+            min="0"
+            class="form-control auth-input"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid price.</div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label fw-semibold">Country</label>
+          <input
+            type="text"
+            name="listing[country]"
+            placeholder="India"
+            class="form-control auth-input"
+            required
+          />
+          <div class="invalid-feedback">Please specify the country.</div>
+        </div>
       </div>
 
-      <!-- Country -->
-      <div class="mb-3">
-        <label class="form-label">Country</label>
-        <input
-          type="text"
-          name="listing[country]"
-          placeholder="India"
-          class="form-control auth-input"
-          required
-        />
-      </div>
-
-      <!-- Location -->
-      <div class="mb-3">
-        <label class="form-label">Location</label>
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Location (City, State)</label>
         <input
           type="text"
           name="listing[location]"
@@ -83,10 +84,10 @@
           class="form-control auth-input"
           required
         />
+        <div class="invalid-feedback">Please specify the location.</div>
       </div>
 
-      <!-- Button -->
-      <button class="auth-btn w-100 mt-2">Add Listing</button>
+      <button class="auth-btn w-100" type="submit">Add Listing</button>
     </form>
   </div>
 </div>

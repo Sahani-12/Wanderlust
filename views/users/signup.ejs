@@ -1,17 +1,15 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
+<div class="container d-flex justify-content-center align-items-center py-4 py-md-5">
   <div class="auth-card p-4">
-
     <h4 class="text-center mb-1 fw-semibold">Create your account</h4>
-    <p class="text-center text-muted mb-4">
-      Welcome to HomeHunt
+    <p class="text-center text-muted mb-4 small">
+      Welcome to CareConnect
     </p>
 
     <form action="/signup" method="POST" class="needs-validation" novalidate>
-
       <div class="mb-3">
-        <label class="form-label">Username</label>
+        <label class="form-label fw-semibold">Username</label>
         <input
           type="text"
           name="username"
@@ -23,7 +21,7 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Email</label>
+        <label class="form-label fw-semibold">Email</label>
         <input
           type="email"
           name="email"
@@ -35,26 +33,33 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Password</label>
+        <label class="form-label fw-semibold">Password</label>
         <input
           type="password"
           name="password"
           class="form-control auth-input"
-          placeholder="Create password"
+          placeholder="Create password (min 4 characters)"
+          minlength="4"
           required
         />
-        <div class="invalid-feedback">Password is required</div>
+        <div class="invalid-feedback">Password must be at least 4 characters</div>
       </div>
 
-      <button class="btn auth-btn w-100 mt-2">
+      <button class="btn auth-btn w-100 mt-2" type="submit">
         Sign Up
       </button>
+
+      <% if (process.env.GOOGLE_CLIENT_ID) { %>
+        <div class="text-center my-3 text-muted small">── OR ──</div>
+        <a href="/auth/google" class="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center gap-2">
+          <i class="fa-brands fa-google text-danger"></i> Sign up with Google
+        </a>
+      <% } %>
     </form>
 
-    <p class="text-center mt-3 small">
+    <p class="text-center mt-4 small mb-0">
       Already have an account?
-      <a href="/login" class="fw-semibold">Login</a>
+      <a href="/login" class="fw-semibold text-decoration-none">Login</a>
     </p>
-
   </div>
 </div>

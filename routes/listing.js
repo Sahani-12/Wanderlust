@@ -2,54 +2,61 @@ const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const Listing = require("../models/listing.js");
-const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
+const {
+  isLoggedIn,
+  isVerified,
+  isOwner,
+  validateListing,
+} = require("../middleware.js");
 const listingController = require("../controllers/listing.js");
-const multer = require("multer");
-const { storage } = require("../cloudConfig.js");
-const upload = multer({ storage });
+const { upload } = require("../cloudConfig.js");
 
-/* =========================
-   🔍 SEARCH ROUTE (SABSE UPAR) dddd
-   ========================= */
-router.get("/search", wrapAsync(async (req, res) => {
-  const { q } = req.query;
+// Search
+router.get(
+  "/search",
+  wrapAsync(async (req, res) => {
+    const rawQuery = (req.query.q || "").trim();
 
-  if (!q) {
-    return res.redirect("/listings");
-  }
+    if (!rawQuery) {
+      return res.redirect("/listings");
+    }
 
-  const listings = await Listing.find({
-    $or: [
-      { title: { $regex: q, $options: "i" } },
-      { location: { $regex: q, $options: "i" } },
-      { country: { $regex: q, $options: "i" } },
-    ],
-  });
+    const cappedQuery = rawQuery.slice(0, 50);
+    const safeRegex = cappedQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-  res.render("listings/index.ejs", { listings });
-}));
+    const listings = await Listing.find({
+      $or: [
+        { title: { $regex: safeRegex, $options: "i" } },
+        { location: { $regex: safeRegex, $options: "i" } },
+        { country: { $regex: safeRegex, $options: "i" } },
+      ],
+    });
 
-/* =========================
-   📃 INDEX + CREATE
-   ========================= */
+    res.render("listings/index.ejs", { listings, searchQuery: cappedQuery });
+  })
+);
+
+// New Listing Form
+router.get(
+  "/new",
+  isLoggedIn,
+  isVerified,
+  listingController.renderNewForm
+);
+
+// Index & Create
 router
   .route("/")
   .get(wrapAsync(listingController.index))
   .post(
     isLoggedIn,
+    isVerified,
     upload.single("listing[image]"),
     validateListing,
     wrapAsync(listingController.createListing)
   );
 
-/* =========================
-   ➕ NEW LISTING FORM
-   ========================= */
-router.get("/new", isLoggedIn, listingController.renderNewForm);
-
-/* =========================
-   ✏️ EDIT FORM
-   ========================= */
+// Edit Form
 router.get(
   "/:id/edit",
   isLoggedIn,
@@ -57,10 +64,7 @@ router.get(
   wrapAsync(listingController.renderEditForm)
 );
 
-/* =========================
-   📌 SHOW / UPDATE / DELETE
-   (DYNAMIC ROUTE — HAMESHA LAST)
-   ========================= */
+// Show, Update, Delete
 router
   .route("/:id")
   .get(wrapAsync(listingController.showListing))

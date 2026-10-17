@@ -1,45 +1,30 @@
-<style>
-  .search-btn {
-    background-color: #fe424d;
-    color: white;
-    border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-  }
-  .search-btn:hover {
-    background-color: #fe424d;
-    color: white;
-  }
-  .search-btn i {
-    display: inline;
-    margin-right: 0.5rem;
-  }
-  .search-inp {
-    border-radius: 25px;
-    padding: 0.5 3rem 0.5 3rem;
-    font-size: 0.8rem;
-  }
-</style>
+<nav class="navbar navbar-expand-md bg-white border-bottom sticky-top">
+  <div class="container-fluid px-3 px-md-4">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/listings">
+      <i class="fa-regular fa-compass"></i>
+      <span class="fw-bold fs-5 text-dark">CareConnect</span>
+    </a>
 
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"
-      ><i class="fa-regular fa-compass"></i
-    ></a>
     <button
-      class="navbar-toggler"
+      class="navbar-toggler border-0 shadow-none"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
+      <div class="navbar-nav me-auto">
         <a class="nav-link" href="/listings">Explore</a>
       </div>
-      <div class="navbar-nav ms-auto">
+
+      <div class="navbar-nav my-2 my-md-0 mx-md-auto">
         <form
-          class="d-flex"
+          class="d-flex search-form"
           role="search"
           action="/listings/search"
           method="GET"
@@ -48,21 +33,35 @@
             class="form-control me-2 search-inp"
             type="search"
             name="q"
-            placeholder="Search destinations"
+            maxlength="50"
+            placeholder="Search destinations (e.g. Goa, Jaipur)"
+            value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
             required
           />
-          <button class="btn search-btn" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>Search
+          <button class="btn search-btn d-flex align-items-center justify-content-center gap-1" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
           </button>
         </form>
       </div>
-      <div class="navbar-nav ms-auto">
+
+      <div class="navbar-nav ms-auto align-items-md-center">
         <a class="nav-link" href="/listings/new">List your home</a>
-        <% if(!currUser) { %>
-        <a class="nav-link" href="/signup"><b>Sign up</b></a>
-        <a class="nav-link" href="/login"><b>Login</b></a>
-        <% } %> <% if(currUser) { %>
-        <a class="nav-link" href="/logout"><b>Logout</b></a>
+
+        <% if (!currUser) { %>
+          <a class="nav-link" href="/signup"><b>Sign up</b></a>
+          <a class="nav-link" href="/login"><b>Login</b></a>
+        <% } else { %>
+          <span class="user-badge my-1 my-md-0 me-md-2 text-dark">
+            <i class="fa-solid fa-circle-user text-secondary"></i>
+            <span><%= currUser.username %></span>
+            <% if (currUser.role === 'admin') { %>
+              <span class="badge bg-danger ms-1" style="font-size: 10px;">Admin</span>
+            <% } else if (currUser.role === 'host') { %>
+              <span class="badge bg-primary ms-1" style="font-size: 10px;">Host</span>
+            <% } %>
+          </span>
+          <a class="nav-link text-danger" href="/logout"><b>Logout</b></a>
         <% } %>
       </div>
     </div>
