@@ -243,6 +243,9 @@ app.use((err, req, res, next) => {
   res.locals.success = res.locals.success || [];
   res.locals.error = res.locals.error || [];
 
+  // Log error so it appears in Render server logs
+  console.error("SERVER ERROR CAUGHT:", err);
+
   // Handle Multer Upload Errors
   if (err.name === "MulterError") {
     if (req.flash) req.flash("error", `File upload error: ${err.message}`);
@@ -251,10 +254,6 @@ app.use((err, req, res, next) => {
 
   const { statusCode = 500 } = err;
   let message = err.message || "Something went wrong";
-
-  if (isProduction && statusCode === 500) {
-    message = "An unexpected server error occurred. Please try again later.";
-  }
 
   res.status(statusCode).render("error.ejs", {
     err: {
