@@ -88,7 +88,7 @@
           <img
             src="<%= listing.image && listing.image.url ? listing.image.url : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80' %>"
             class="card-img-top"
-            alt="listing_image"
+            alt="<%= listing.title %> in <%= listing.location %>, <%= listing.country %>"
           />
           <div class="card-img-overlay"></div>
 
